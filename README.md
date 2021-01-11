@@ -8,7 +8,7 @@ In this paper, we developed a real-time intelligent transportation system (ITS) 
 2. Support parallel training
 3. Video and data is included with annotated files.
 
-[![demo]](https://youtu.be/6l2DraCKW7g)
+**[YouTube link](https://youtu.be/6l2DraCKW7g)**
 
 # Getting started
 ## Requirenments installation
