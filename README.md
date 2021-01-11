@@ -54,7 +54,8 @@ Object tracking is based on the Kalman filter algorithm and compare to the other
 The algorithm of estimation is simple
 
 ![algorithm](./result/algorithm2.png)
-for the wrong direction estimation you can modifi _detector_car_person.py_ starting from line 280 as your task and wrong direction may be different from ours
+
+for the wrong direction estimation you can modify _detector_car_person.py_ starting from line 280 as your task and wrong direction may be different from ours
 
 ### Results 
 Here is the results of our work, this system is in current use, and it's practically effective.
