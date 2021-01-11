@@ -68,7 +68,7 @@ If you find any errors or have any suggestions, please contact me (**Email:** `u
 ## Citation
 
 ```bash
-@article{Real-Time, Deep Learning Based Wrong Direction Detection,
+@article{Real-Time,
   author = {Saidrasul Usmankhujaev, Shokhrukh Baydadaev, Kwon Jang Woo},
   title = {Real-Time, Deep Learning Based Wrong Direction Detection},
   year = {2020},
