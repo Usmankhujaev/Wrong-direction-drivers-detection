@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wrongway"
+version = "2.0.0"
+description = "Real-time wrong-direction driver detection (YOLO11 + ByteTrack + entry-exit validation)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Saidrasul Usmankhujaev" }]
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+    "opencv-python>=4.10",
+    "ultralytics>=8.3",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+mqtt = ["paho-mqtt>=2.0"]
+
+[project.scripts]
+wrong-direction = "wrongway.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["wrongway"]
+
+[tool.ruff]
+line-length = 100
+exclude = ["legacy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

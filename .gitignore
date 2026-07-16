@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+runs/
+dataset/
+result/clips/
+result/*.jsonl
+result/*.db
+result/*.npz
+*.pt
+*.h5
+*.mp4
+*.avi

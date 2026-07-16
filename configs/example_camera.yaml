@@ -1,0 +1,68 @@
+# Per-camera configuration. Every section is optional; defaults are sensible.
+camera: cam01
+source: ""                    # video path, rtsp://..., or "camera"; can be set via --input
+roi: [0.109, 0.0608, 0.78, 1.0]   # relative crop [x1, y1, x2, y2]; omit for full frame
+lanes: 3
+# How a violation is confirmed:
+#   displacement - entry->current displacement against the allowed direction
+#   zones        - the paper's entry-exit area rules
+#   any          - either signal confirms (default)
+#   both         - both must agree (fewest false positives)
+confirmation: any
+
+direction:
+  mode: fixed                 # "fixed" (allowed direction below) or "learned"
+  allowed: west               # east | west | north | south
+  min_displacement: 12        # pixels (meters if calibration is present)
+  hysteresis_frames: 10       # consecutive wrong frames required to confirm
+  history: 30
+  # flow_cache: result/flow_cam01.npz   # persist learned flow (mode: learned)
+
+# Ground-plane calibration: 4+ image pixels and their road coordinates in
+# meters. Makes direction judgments camera-independent. Uncomment to use.
+# calibration:
+#   image_points: [[120, 300], [520, 300], [80, 460], [560, 460]]
+#   world_points: [[0, 0], [30, 0], [0, 12], [30, 12]]
+#   min_displacement_m: 2.0
+
+# Entry-exit areas from the paper (relative coordinates). A track entering the
+# scene inside a wrong_entries area, or moving entry->current along a
+# wrong_transitions pair, is a violation.
+# zones:
+#   areas:
+#     A: [[0.00, 0.20], [0.15, 0.20], [0.15, 1.00], [0.00, 1.00]]
+#     B: [[0.40, 0.20], [0.60, 0.20], [0.60, 1.00], [0.40, 1.00]]
+#     C: [[0.85, 0.20], [1.00, 0.20], [1.00, 1.00], [0.85, 1.00]]
+#   wrong_entries: [C]
+#   wrong_transitions: [[B, C]]
+
+detection:
+  model: yolo11n.pt
+  conf: 0.3
+  iou: 0.4
+  tracker: bytetrack.yaml     # or botsort.yaml for ReID (better with occlusions)
+  detect_every: 1             # 2-3 roughly doubles/triples throughput
+  detect_persons: false
+  # device: mps               # "0" (CUDA), "mps" (Apple Silicon), "cpu"; auto if omitted
+
+alerts:
+  result_dir: result
+  event_log: result/events.jsonl
+  # sqlite: result/events.db
+  save_clips: true
+  clip_seconds_before: 3.0
+  clip_seconds_after: 3.0
+  notifiers: []
+  # notifiers:
+  #   - kind: webhook
+  #     url: https://monitoring.example.com/hooks/wrongway
+  #   - kind: telegram
+  #     token: "123456:ABC..."
+  #     chat_id: "987654321"
+  #   - kind: mqtt
+  #     host: broker.local
+  #     topic: wrongway/violations
+
+enhance:
+  low_light: false            # CLAHE on dark frames (nighttime robustness)
+  brightness_threshold: 60
